@@ -1,5 +1,8 @@
 # 得物内容下载器
 
+## 语言选项 / Language Options
+- [简体中文](README.md) ｜ [English](README_EN.md)
+
 这是一个用于下载得物平台内容的Windows应用程序，可以批量下载视频、封面图片和文案内容。
 
 ## 功能特点
