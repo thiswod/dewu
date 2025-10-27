@@ -28,7 +28,6 @@ namespace dewu
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             groupBox1 = new GroupBox();
             textBox1 = new TextBox();
             groupBox2 = new GroupBox();
@@ -59,7 +58,6 @@ namespace dewu
             textBox1.ScrollBars = ScrollBars.Vertical;
             textBox1.Size = new Size(585, 116);
             textBox1.TabIndex = 0;
-            textBox1.Text = resources.GetString("textBox1.Text");
             // 
             // groupBox2
             // 
