@@ -34,6 +34,8 @@ namespace dewu
             textBox2 = new TextBox();
             button2 = new Button();
             button1 = new Button();
+            checkBox1 = new CheckBox();
+            checkBox2 = new CheckBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             SuspendLayout();
@@ -61,12 +63,14 @@ namespace dewu
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(checkBox2);
+            groupBox2.Controls.Add(checkBox1);
             groupBox2.Controls.Add(textBox2);
             groupBox2.Controls.Add(button2);
             groupBox2.Dock = DockStyle.Fill;
             groupBox2.Location = new Point(0, 145);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(600, 57);
+            groupBox2.Size = new Size(600, 86);
             groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
             groupBox2.Text = "保存位置设置";
@@ -93,7 +97,7 @@ namespace dewu
             // button1
             // 
             button1.Dock = DockStyle.Bottom;
-            button1.Location = new Point(0, 202);
+            button1.Location = new Point(0, 231);
             button1.Name = "button1";
             button1.Size = new Size(600, 23);
             button1.TabIndex = 1;
@@ -101,11 +105,31 @@ namespace dewu
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(12, 51);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(123, 21);
+            checkBox1.TabIndex = 2;
+            checkBox1.Text = "只保留第一个图片";
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            checkBox2.AutoSize = true;
+            checkBox2.Location = new Point(141, 51);
+            checkBox2.Name = "checkBox2";
+            checkBox2.Size = new Size(75, 21);
+            checkBox2.TabIndex = 3;
+            checkBox2.Text = "不要文案";
+            checkBox2.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(600, 225);
+            ClientSize = new Size(600, 254);
             Controls.Add(groupBox2);
             Controls.Add(button1);
             Controls.Add(groupBox1);
@@ -126,5 +150,7 @@ namespace dewu
         private TextBox textBox2;
         private Button button2;
         private Button button1;
+        private CheckBox checkBox2;
+        private CheckBox checkBox1;
     }
 }

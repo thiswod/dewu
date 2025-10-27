@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using System;
 
 namespace dewu
 {
@@ -40,9 +41,17 @@ namespace dewu
             int successCount = 0;
             int failCount = 0;
             int totalCount = matches.Count;
+            
+            // 获取复选框状态（线程安全）
+            bool keepOnlyFirstImage = false;
+            bool skipTextContent = false;
+            // 使用普通int变量配合Interlocked静态方法实现线程安全计数
+            int imgCount = 0;
             Invoke(() =>
             {
                 button1.Text = $"正在保存 0/{totalCount}";
+                keepOnlyFirstImage = checkBox1.Checked;
+                skipTextContent = checkBox2.Checked;
             });
             foreach (Match match in matches)
             {
@@ -69,19 +78,35 @@ namespace dewu
                                     string videoUrl = dynamic1.content.videoShareUrl;//视频地址
                                     string cover = dynamic1.content.cover.url;//封面
                                     string content = dynamic1.content.content;//文案
-                                    using (FileStream fileStream = new FileStream(Path.Combine(textBox2.Text, $"{title}.txt"), FileMode.CreateNew))
+                                    // 如果不跳过文案，则保存文案文件
+                                    if (!skipTextContent)
                                     {
-                                        // 将字符串转换为字节数组再写入
-                                        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(content);
-                                        fileStream.Write(bytes, 0, bytes.Length);
+                                        using (FileStream fileStream = new FileStream(Path.Combine(textBox2.Text, $"文案 - {title}.txt"), FileMode.CreateNew))
+                                        {
+                                            // 将字符串转换为字节数组再写入
+                                            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(content);
+                                            fileStream.Write(bytes, 0, bytes.Length);
+                                        }
                                     }
-                                    http.Open(cover);
-                                    http.Send();
-                                    using (FileStream fileStream = new FileStream(Path.Combine(textBox2.Text, $"{title}.webp"), FileMode.CreateNew))
+                                    // 保存封面图片
+                                    if (keepOnlyFirstImage)
                                     {
-                                        fileStream.Write(http.GetResponse().rawResult);
+                                        // 原子操作：如果当前值为0，则增加并返回true，否则返回false
+                                        int originalValue = System.Threading.Interlocked.CompareExchange(ref imgCount, 1, 0);
+                                        
+                                        // 只有第一个进入的线程(originalValue为0)才会保存图片
+                                        if (originalValue == 0)
+                                        {
+                                            http.Open(cover);
+                                            http.Send();
+                                            using (FileStream fileStream = new FileStream(Path.Combine(textBox2.Text, $"{title}.webp"), FileMode.CreateNew))
+                                            {
+                                                fileStream.Write(http.GetResponse().rawResult);
+                                            }
+                                        }
                                     }
                                     string videoName = $"{title}.mp4";
+                                    // 检查是否有视频并保存
                                     foreach(dynamic dynamic2 in dynamic1.content.media.list)
                                     {
                                         if (dynamic2.mediaType == "video")
@@ -98,7 +123,8 @@ namespace dewu
                                 }
                                 // 任务成功完成，递增成功计数
                                 successCount++;
-                            }catch(Exception ex)
+                            }
+                            catch(Exception ex)
                             {
                                 failCount++;
                             }
