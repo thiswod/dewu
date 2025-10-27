@@ -9,9 +9,11 @@ This is a Windows application for downloading content from the Dewu platform, su
 
 - **Batch Download**: Support extracting multiple URL links from multi-line text and downloading multiple contents in parallel
 - **Complete Content Preservation**: Download videos, cover images (in webp format), and text content (in txt format)
+- **Customizable Content Options**: Option to keep only the first image to save storage space
 - **Customizable Save Location**: Users can select the save directory
 - **Real-time Progress Display**: Show progress and statistics during download
 - **Completion Notification**: Display detailed success/failure statistics after download completion
+- **Thread Safety**: Uses atomic operations to ensure correct execution in multi-threaded environment
 
 ## Interface Introduction
 
@@ -19,6 +21,8 @@ This is a Windows application for downloading content from the Dewu platform, su
 - **Text with links/one per line**: Input text containing URL links in this text box, one link per line
 
 ### Lower Area
+- **Option Settings**:
+  - Keep only the first image: When checked, only saves the first video/image to save storage space
 - **Save Location Settings**:
   - Text box: Displays the currently selected save directory path
   - Browse... button: Click to open folder selection dialog to customize save location
@@ -38,6 +42,7 @@ This is a Windows application for downloading content from the Dewu platform, su
 
 - **.NET 8**: Developed using C# Windows Forms
 - **Multi-threaded Downloading**: Using SimpleThreadPool to implement parallel downloads for improved efficiency
+- **Thread Safety Handling**: Using Interlocked.CompareExchange to implement atomic operations, ensuring correct execution in multi-threaded environment
 - **Regular Expressions**: Extract URL links and parse webpage content
 - **JSON Parsing**: Using EasyJson to parse API response data
 - **HTTP Requests**: Using HttpRequestClass to send requests and get content
@@ -62,6 +67,7 @@ dewu/
 2. Do not close the program window during the download process
 3. Please ensure there is enough disk space and write permissions
 4. Download speed depends on network conditions and server response
+5. When the "Keep only the first image" option is checked, only the first thread will save the image, ensuring only one copy is downloaded
 
 ## Error Handling
 
