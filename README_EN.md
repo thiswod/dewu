@@ -24,6 +24,9 @@ This is a Windows application for downloading content from the Dewu platform, su
   - Browse... button: Click to open folder selection dialog to customize save location
 - **Save(&D) button**: Click to start the download process
 
+### Interface Preview
+![Application Interface Screenshot](img/Snipaste_2025-10-27_17-25-51.png)
+
 ## Usage
 
 1. Paste text containing Dewu links in the upper text box (format: `XXX发布了一篇得物动态，https://dw4.co/t/A/XXXxxxXxX点开链接，快来看吧！`)
