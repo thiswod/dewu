@@ -30,7 +30,7 @@
 
 ## 技术实现
 
-- **.NET Framework**：使用C# Windows Forms开发
+- **.NET 8**：使用C# Windows Forms开发
 - **多线程下载**：使用SimpleThreadPool实现并行下载，提高效率
 - **正则表达式**：提取URL链接和解析网页内容
 - **JSON解析**：使用EasyJson解析API响应数据
